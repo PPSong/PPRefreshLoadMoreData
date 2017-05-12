@@ -35,10 +35,10 @@ public class PPLoadController extends RecyclerView.OnScrollListener implements S
     }
 
     public interface LoadDataProvider {
-        //结束需要用event bus发送得到的数据并用endRefreshSpinner结束refresh spinner
+        //结束需要用ppLoadController.ppLoadDataAdapter.getRefreshData发送得到的数据并用endRefreshSpinner结束refresh spinner
         public void refreshData();
 
-        //结束需要用event bus发送得到的数据并用addLoadMoreSpinner结束load more spinner
+        //结束需要用ppLoadController.ppLoadDataAdapter.loadMoreEnd发送得到的数据并用removeLoadMoreSpinner结束load more spinner
         public void loadMoreData();
     }
 
