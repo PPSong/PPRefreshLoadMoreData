@@ -42,16 +42,17 @@ public abstract class PPLoadDataAdapter<T, S>
 
     abstract protected void addRefreshData(List<S> data);
 
-    abstract public long ppGetItemId(int position);
+//    abstract public long ppGetItemId(int position);
 
     public void addLoadMoreSpinner() {
-        loadMore = true;
         Handler mainHandler = new Handler(getMainLooper());
         mainHandler.post(
                 new Runnable() {
                     @Override
                     public void run() {
-                        notifyDataSetChanged();
+                        loadMore = true;
+                        notifyItemInserted(data.size());
+                        //notifyDataSetChanged();
                     }
                 }
         );
@@ -70,29 +71,37 @@ public abstract class PPLoadDataAdapter<T, S>
     public void getRefreshData(List<S> data, boolean noMore) {
 //        if (this.noMore == false && noMore == true) {
 //            this.noMore = noMore;
-//            notifyItemInserted(data == null ? 0 : data.size());
+//            notifyItemInserted(data.size());
 //        } else if (this.noMore == true && noMore == false) {
 //            this.noMore = noMore;
-//            notifyItemRemoved(data == null ? 0 : data.size());
+//            notifyItemRemoved(data.size());
 //        }
+        if (this.noMore) {
+            notifyItemRemoved(data.size());
+        }
+
         this.noMore = noMore;
+        if (this.noMore) {
+            notifyItemInserted(data.size());
+        }
+
         addRefreshData(data);
     }
 
-    @Override
-    public long getItemId(int position) {
-        if (position == data.size()) {
-            if (loadMore) {
-                return LOAD_MORE_SPIN_ID;
-            } else if (noMore) {
-                return NO_MORE_ID;
-            } else {
-                throw new Error("PPLoadDataAdapter.getItemViewType中数组越界");
-            }
-        } else {
-            return ppGetItemId(position);
-        }
-    }
+//    @Override
+//    public long getItemId(int position) {
+//        if (position == data.size()) {
+//            if (loadMore) {
+//                return LOAD_MORE_SPIN_ID;
+//            } else if (noMore) {
+//                return NO_MORE_ID;
+//            } else {
+//                throw new Error("PPLoadDataAdapter.getItemViewType中数组越界");
+//            }
+//        } else {
+//            return ppGetItemId(position);
+//        }
+//    }
 
     @Override
     public int getItemViewType(int position) {

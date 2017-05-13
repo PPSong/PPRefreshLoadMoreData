@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements PPLoadController.
                     data.add(baseLong + j++);
                 }
                 //success with more
-                ppLoadController.ppLoadDataAdapter.getRefreshData(data, false);
+                ppLoadController.ppLoadDataAdapter.getRefreshData(data, true);
                 ppLoadController.endRefreshSpinner();
 
                 //success with no more

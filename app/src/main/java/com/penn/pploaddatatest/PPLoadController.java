@@ -27,7 +27,7 @@ public class PPLoadController extends RecyclerView.OnScrollListener implements S
         this.linearLayoutManager = linearLayoutManager;
         this.loadDataProvider = loadDataProvider;
 
-        ppLoadDataAdapter.setHasStableIds(true);
+        //ppLoadDataAdapter.setHasStableIds(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(ppLoadDataAdapter);
         recyclerView.addOnScrollListener(this);
@@ -83,12 +83,5 @@ public class PPLoadController extends RecyclerView.OnScrollListener implements S
         if ((totalItemCount - visibleItemCount) <= (firstVisibleItem + loadMoreDistance)) {
             loadMore();
         }
-    }
-
-    @Override
-    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-        super.onScrollStateChanged(recyclerView, newState);
-
-        Log.v("pplog", "" + newState);
     }
 }

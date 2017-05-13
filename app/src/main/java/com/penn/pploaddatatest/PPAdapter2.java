@@ -39,23 +39,34 @@ public class PPAdapter2 extends PPLoadDataAdapter<Long, Long> {
         ((PPViewHolder) holder).textView.setText(data.get(position).toString());
     }
 
-    @Override
-    public long ppGetItemId(int position) {
-        return data.get(position);
-    }
+//    @Override
+//    public long ppGetItemId(int position) {
+//        return data.get(position);
+//    }
 
     @Override
     protected void addLoadMoreData(final List data) {
+        int oldSize = this.data.size();
+        int size = data.size();
+
         this.data.addAll(data);
-        notifyDataSetChanged();
+
+        notifyItemRangeInserted(oldSize, size);
+        //notifyDataSetChanged();
     }
 
     @Override
     protected void addRefreshData(List data) {
-        this.data.clear();
-        this.data.addAll(data);
+        int oldSize = this.data.size();
+        int size = data.size();
 
-        notifyDataSetChanged();
+        this.data.clear();
+        notifyItemRangeRemoved(0, oldSize);
+
+        this.data.addAll(data);
+        Log.v("pplog", "addRefreshData:" + size);
+        notifyItemRangeInserted(0, size);
+        //notifyDataSetChanged();
     }
 
     public class PPViewHolder extends RecyclerView.ViewHolder {
